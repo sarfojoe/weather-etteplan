@@ -3,19 +3,15 @@ import Dropdown from "./components/Dropdown-Component";
 import { HomeLayout } from "./components/Home-Layout-Component";
 import WeatherDetailsList from "./components/Weather-Details-List-cComponent";
 import { cities, townWeatherData } from "./data";
-import Glossary from "./pages/Glossary";
+import GlossaryPage from "./pages/Glossary-Page";
+import HomePage from "./pages/Home-Page";
 
 function App() {
-  return (
-    <HomeLayout>
-      <Dropdown options={cities} onChange={(val) => console.log(val)} />
-      <WeatherDetailsList locations={Array(4).fill(townWeatherData)} />
-    </HomeLayout>
-  );
+  return <HomePage />;
 
   return (
     <div className="App">
-      <Glossary />
+      <GlossaryPage />
     </div>
   );
 }

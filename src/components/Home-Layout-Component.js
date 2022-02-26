@@ -5,24 +5,20 @@ export function HomeLayout({ children }) {
   return (
     <ComponentContainer>
       <HeaderContainer>
-        <HeaderText> Säätutka </HeaderText>
+        <HeaderText>Säätutkä</HeaderText>
       </HeaderContainer>
-      <BodyContainer> {children} </BodyContainer>
+      <BodyContainer>{children}</BodyContainer>
     </ComponentContainer>
   );
 }
 
 const ComponentContainer = styled.div`
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   background: ${colors.monoBackground};
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  /* * {
-        border: 1px solid red
-    } */
 `;
 
 const HeaderContainer = styled.div`
