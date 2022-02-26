@@ -1,23 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Dropdown from "./components/Dropdown-Component";
+import { HomeLayout } from "./components/Home-Layout-Component";
+import WeatherDetailsList from "./components/Weather-Details-List-cComponent";
+import { cities, townWeatherData } from "./data";
+import Glossary from "./pages/Glossary";
 
 function App() {
   return (
+    <HomeLayout>
+      <Dropdown options={cities} onChange={(val) => console.log(val)} />
+      <WeatherDetailsList locations={Array(4).fill(townWeatherData)} />
+    </HomeLayout>
+  );
+
+  return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Glossary />
     </div>
   );
 }
