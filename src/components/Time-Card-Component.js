@@ -1,38 +1,32 @@
 import React from "react";
 import styled from "styled-components";
 import { colors, fontSize } from "../swatch";
-import { WeatherIcon } from "./Weather-Icons-Component";
+import { convertTimeStamp } from "../helpers/convertUnixTimestampToDate";
 
-TimeCard.defaultProps = {
-  time: "00:00",
-  temp: "- °C",
-  windSpeed: "- m/s",
-  humidity: "- %",
-  precipitation: "- mm",
-  forecast: "SnowIcon",
-};
-
-export default function TimeCard({
-  time,
-  temp,
-  windSpeed,
-  humidity,
-  precipitation,
-  forecast,
-}) {
+export default function TimeCard({ data }) {
+  const { dt, weather, wind_speed, humidity, temp } = data;
+  const { time } = convertTimeStamp(dt);
+  const precipitation = Object.values(data?.rain || { rain: "empty" });
   return (
     <CardWrapper>
       <TopChildWrapper>
         <TimeText>{time}</TimeText>
         <IconWrapper>
-          <WeatherIcon name={forecast} />
+          <WeatherIconContainer>
+            <WeatherIcon
+              src={`https://openweathermap.org/img/wn/${weather[0].icon}@4x.png`}
+              alt="weatherIcon"
+            />
+          </WeatherIconContainer>
         </IconWrapper>
-        <TempText>{temp}</TempText>
+        <TempText>{parseInt(temp)}°C</TempText>
       </TopChildWrapper>
       <BottomChildWrapper>
-        <MiscText>{windSpeed}</MiscText>
-        <MiscText>{humidity}</MiscText>
-        <MiscText>{precipitation}</MiscText>
+        <MiscText>{wind_speed}m/s</MiscText>
+        <MiscText>{humidity}%</MiscText>
+        <MiscText>
+          {precipitation[0] !== "empty" ? precipitation + "mm" : "0mm"}
+        </MiscText>
       </BottomChildWrapper>
     </CardWrapper>
   );
@@ -87,6 +81,15 @@ const IconWrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+`;
+
+const WeatherIcon = styled.img`
+  width: 100%;
+  object-fit: cover;
+`;
+
+const WeatherIconContainer = styled.div`
+  width: 30px;
 `;
 
 const TempText = styled.p`

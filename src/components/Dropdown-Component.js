@@ -45,7 +45,7 @@ export default function Dropdown({ options, onChange }) {
     <Select
       isSearchable={false}
       placeholder={options.length > 0 ? options[0].label : "Select One"}
-      onChange={onChange}
+      onChange={(option) => onChange(option.value)}
       options={options}
       styles={styles}
     />

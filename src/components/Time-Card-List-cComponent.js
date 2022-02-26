@@ -1,15 +1,15 @@
 import styled from "styled-components";
 import TimeCard from "./Time-Card-Component";
 
-TimeCardList.defaultProps = {
-  times: Array(5).fill({}),
-};
-
 export default function TimeCardList({ times }) {
+  const threeHourIndexes = [1, 4, 7, 10];
   return (
     <ComponentContainer>
-      {times.map((item) => {
-        return <TimeCard {...item} />;
+      {times.map((data, index) => {
+        if (threeHourIndexes.includes(index + 1)) {
+          return <TimeCard key={index} data={data} />;
+        }
+        return null;
       })}
     </ComponentContainer>
   );

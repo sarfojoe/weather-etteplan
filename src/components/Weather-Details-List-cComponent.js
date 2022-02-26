@@ -7,11 +7,10 @@ WeatherDetailsList.defaultProps = {
 };
 
 export default function WeatherDetailsList({ locations }) {
-  console.log({ locations });
   return (
     <ComponentContainer>
-      {locations.map((item) => {
-        return <WeatherDetailsComponent townWeather={item} />;
+      {locations.map((item, index) => {
+        return <WeatherDetailsComponent key={index} townWeather={item} />;
       })}
     </ComponentContainer>
   );
@@ -26,7 +25,7 @@ const ComponentContainer = styled.div`
   margin: 0px;
 
   @media only screen and (min-width: 660px) {
-    justify-content: space-between !important;
+    justify-content: space-between;
     min-width: 614px;
     max-width: 654px;
   }

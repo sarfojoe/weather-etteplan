@@ -4,13 +4,11 @@ import TimeCard from "./Time-Card-Component";
 import TimeCardList from "./Time-Card-List-cComponent";
 import WeatherCard from "./Weather-Card-Component";
 
-WeatherDetailsComponent.defaultProps = {};
-
 export default function WeatherDetailsComponent({ townWeather }) {
   return (
     <ComponentContainer>
-      <WeatherCard {...townWeather} />
-      <TimeCardList times={townWeather?.times} />
+      <WeatherCard currentWeather={townWeather.primary} />
+      <TimeCardList times={townWeather.secondary.hourly} />
     </ComponentContainer>
   );
 }

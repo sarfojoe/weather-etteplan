@@ -1,41 +1,35 @@
 import React from "react";
 import styled from "styled-components";
 import { colors, fontSize } from "../swatch";
-import { WeatherIcon } from "./Weather-Icons-Component";
+import { convertTimeStamp } from "../helpers/convertUnixTimestampToDate";
 
-WeatherCard.defaultProps = {
-  town: "- - -",
-  condition: "- -",
-  time: "00:00",
-  temp: "- °C",
-  windSpeed: "- m/s",
-  humidity: "- %",
-  precipitation: "- mm",
-  forecast: "CloudIcon",
-  date: "- -",
-};
-
-export default function WeatherCard({
-  time,
-  temp,
-  windSpeed,
-  humidity,
-  precipitation,
-  forecast,
-  town,
-  condition,
-  date,
-}) {
+export default function WeatherCard({ currentWeather }) {
+  const {
+    name,
+    weather,
+    main: { temp, humidity },
+    dt,
+    wind: { speed },
+  } = currentWeather;
+  const { time, date } = convertTimeStamp(dt);
+  const precipitation = Object.values(
+    currentWeather?.rain || { rain: "empty" },
+  );
   return (
     <CardWrapper>
       <TopChildWrapper>
         <TownWrapper>
-          <TownText>{town}</TownText>
-          <TimeText>{condition}</TimeText>
+          <TownText>{name}</TownText>
+          <TimeText>{weather[0].description}</TimeText>
         </TownWrapper>
         <TempWrapper>
-          <WeatherIcon name={forecast} size={50} />
-          <TempText>{temp}</TempText>
+          <WeatherIconContainer>
+            <WeatherIcon
+              src={`https://openweathermap.org/img/wn/${weather[0].icon}@4x.png`}
+              alt="weatherIcon"
+            />
+          </WeatherIconContainer>
+          <TempText>{parseInt(temp)}°C</TempText>
         </TempWrapper>
       </TopChildWrapper>
       <BottomChildWrapper>
@@ -45,9 +39,12 @@ export default function WeatherCard({
         </TownWrapper>
 
         <MiscWrapper>
-          <MiscText>Wind: {windSpeed}</MiscText>
-          <MiscText>Humidity: {humidity}</MiscText>
-          <MiscText>Precipitation: {precipitation}</MiscText>
+          <MiscText>Wind: {speed}m/s</MiscText>
+          <MiscText>Humidity: {humidity}%</MiscText>
+          <MiscText>
+            Precipitation:{" "}
+            {precipitation[0] !== "empty" ? precipitation + "mm" : "0mm"}
+          </MiscText>
         </MiscWrapper>
       </BottomChildWrapper>
     </CardWrapper>
@@ -65,6 +62,7 @@ const CardWrapper = styled.div`
   /* width: clamp(auto, 100%, 350px); */
   width: 100%;
   max-width: 350px;
+  min-width: 277px;
 
   p {
     margin: 0px;
@@ -134,6 +132,15 @@ const IconWrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+`;
+
+const WeatherIcon = styled.img`
+  width: 100%;
+  object-fit: cover;
+`;
+
+const WeatherIconContainer = styled.div`
+  width: 50px;
 `;
 const TempText = styled.p`
   font-size: ${fontSize.xl}px;
