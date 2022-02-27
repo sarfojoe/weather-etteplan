@@ -5,7 +5,7 @@ export function HomeLayout({ children }) {
   return (
     <ComponentContainer>
       <HeaderContainer>
-        <HeaderText>Säätutkä</HeaderText>
+        <HeaderText>Säätutka</HeaderText>
       </HeaderContainer>
       <BodyContainer>{children}</BodyContainer>
     </ComponentContainer>
